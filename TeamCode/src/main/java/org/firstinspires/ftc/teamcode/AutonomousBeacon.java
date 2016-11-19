@@ -56,7 +56,7 @@ public class AutonomousBeacon extends LinearOpMode {
         return max;
     }
 
-    public void move(double power, double angle, double time) {
+    public void move(double power, double angle) {
         double y = Math.sin(Math.toRadians(angle));
         double x = Math.cos(Math.toRadians(angle));
 
@@ -76,53 +76,57 @@ public class AutonomousBeacon extends LinearOpMode {
 
         runtime.reset();
 
+        //telemetry.addData("Power", " BR: " + setBR + " BL: " + setBL + " FL: " + setFL + " FR: " + setFR);
+        //telemetry.update();
+
         robot.BR.setPower(setBR);
         robot.FL.setPower(setFL);
         robot.FR.setPower(setFR);
         robot.BL.setPower(setBL);
-
-        while(runtime.seconds() < time);
-
-        runtime.reset();
-
-        robot.BR.setPower(0);
-        robot.FL.setPower(0);
-        robot.FR.setPower(0);
-        robot.BL.setPower(0);
-
-        while(runtime.seconds() < 1);
     }
 
-    public void moveUntilWhite(double power, double angle, double time) {
-        double y = Math.sin(Math.toRadians(angle));
-        double x = Math.cos(Math.toRadians(angle));
+    public void stopColor(int color) {
+        //1: red, 2: middle, 3: blue, 4: either, 5: both
 
-        double setFL = y + x;
-        double setFR = -y + x;
-        double setBL = y - x;
-        double setBR = -y - x;
+        switch (color) {
+            case 1:
+                while(robot.colorSensor.red() == 0);
+                break;
+            case 2:
+                while(robot.colorSensor.blue() == 0);
+                break;
+            case 3:
+                while(robot.colorSensor.blue() < 1);
+                break;
+            case 4:
+                while(robot.colorSensor.blue() == 0 && robot.colorSensor.red() == 0);
+                break;
+            case 5:
+                while(robot.colorSensor.blue() == 0 || robot.colorSensor.red() == 0);
+                break;
+        }
 
-        double max = findMax(Math.abs(setFL), Math.abs(setFR), Math.abs(setBL), Math.abs(setBR));
+        finalStop();
+    }
 
-        double scale = power/max;
+    public void stopTime(double time) {
+        runtime.reset();
+        while(runtime.seconds() < time);
+        finalStop();
+    }
 
-        setFL *= scale;
-        setFR *= scale;
-        setBL *= scale;
-        setBR *= scale;
+    public void stopTouch() {
+        while(!robot.touchSensor.isPressed());
+        finalStop();
+    }
 
-        robot.BR.setPower(setBR);
-        robot.FL.setPower(setFL);
-        robot.FR.setPower(setFR);
-        robot.BL.setPower(setBL);
-
-        while(robot.groundColorSensor.alpha() > 1);
-
+    public void finalStop() {
         robot.BR.setPower(0);
         robot.FL.setPower(0);
         robot.FR.setPower(0);
         robot.BL.setPower(0);
 
+        runtime.reset();
         while(runtime.seconds() < 1);
     }
 
@@ -136,7 +140,83 @@ public class AutonomousBeacon extends LinearOpMode {
 
         waitForStart();
 
-        //move(0.4, 115, 3);
-        moveUntilWhite(0.4, 115, 3);
+        move(0.3, 225);
+        stopColor(3);
+        move(0.25, 270);
+        stopTouch();
+
+        /*
+        move(0.2, 90);
+        stopTime(0.25);
+
+        telemetry.addData("Part", "1");
+        telemetry.update();
+
+        if(robot.colorSensor.blue() > 0) {
+
+            telemetry.addData("Part", "1.1");
+            telemetry.update();
+
+            move(0.2, 360);
+            telemetry.addData("Part", "1.1.1");
+            telemetry.update();
+            while (robot.colorSensor.blue() > 0)
+            telemetry.addData("Part", "1.1.2");
+            telemetry.update();
+            finalStop();
+
+            telemetry.addData("Part", "1.2");
+            telemetry.update();
+
+            if (robot.colorSensor.red()>0) {
+                //found color intersection
+                move(0.2, 180);
+                stopTime(0.4);
+            } else {
+                //found beacon edge
+                move(0.2, 180);
+                stopColor(1);
+                move(0.2, 360);
+                stopTime(0.4);
+            }
+
+            telemetry.addData("Part", "1.3");
+            telemetry.update();
+        }
+
+        telemetry.addData("Part", "2");
+        telemetry.update();
+
+        if(robot.colorSensor.red() > 0) {
+            telemetry.addData("Part", "2.1");
+            telemetry.update();
+
+            move(0.2, 360);
+            while (robot.colorSensor.red() > 0)
+            finalStop();
+
+            telemetry.addData("Part", "2.2");
+            telemetry.update();
+
+            if (robot.colorSensor.blue()>0) {
+                //found color intersection
+                move(0.2, 360);
+                stopTime(0.4);
+            } else {
+                //found beacon edge
+                move(0.2, 180);
+                stopColor(2);
+                move(0.2, 180);
+                stopTime(0.4);
+            }
+
+            telemetry.addData("Part", "2.3");
+            telemetry.update();
+        }*/
+
+        telemetry.addData("Part", "2");
+        telemetry.update();
+
+        while(true){}
     }
 }

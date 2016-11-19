@@ -1,10 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.text.method.Touch;
+
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Hardware
@@ -15,8 +19,11 @@ public class Hardware
     public DcMotor  BL  = null;
     public DcMotor  BR  = null;
 
-    ColorSensor beaconColorSensor = null;
-    ColorSensor groundColorSensor = null;
+    ColorSensor colorSensor = null;
+    OpticalDistanceSensor distanceSensor = null;
+    TouchSensor touchSensor = null;
+
+    double whiteThreshold;
 
     /* Local OpMode members. */
     HardwareMap hwMap  = null;
@@ -49,7 +56,8 @@ public class Hardware
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and Initialize Color Sensor
-        beaconColorSensor = hwMap.colorSensor.get("beaconcolorsensor");
-        groundColorSensor = hwMap.colorSensor.get("groundcolorsensor");
+        colorSensor = hwMap.colorSensor.get("colorsensor");
+        distanceSensor = hwMap.opticalDistanceSensor.get("distancesensor");
+        touchSensor = hwMap.touchSensor.get("touchsensor");
     }
 }

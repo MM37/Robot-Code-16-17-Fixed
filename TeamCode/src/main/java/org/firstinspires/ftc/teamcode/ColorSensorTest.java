@@ -55,6 +55,19 @@ public class ColorSensorTest extends OpMode
 {
 
     Hardware robot = new Hardware();
+    ElapsedTime runtime = new ElapsedTime();
+
+    int redValue = 0;
+    int blueValue = 0;
+    int greenValue = 0;
+    int hue = 0;
+    int light = 0;
+    String connectionInfo = "";
+
+    double lightDetected = 0;
+
+    boolean pressed = false;
+
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -63,6 +76,7 @@ public class ColorSensorTest extends OpMode
     public void init() {
         robot.init(hardwareMap);
         telemetry.addData("Status", "Initialized");
+        robot.colorSensor.enableLed(true);
     }
 
     /*
@@ -75,25 +89,44 @@ public class ColorSensorTest extends OpMode
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
-    public void start() {}
+    public void start() {
+        runtime.reset();
+    }
 
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
     @Override
     public void loop() {
+        redValue = robot.colorSensor.red();
+        blueValue = robot.colorSensor.blue();
+        greenValue = robot.colorSensor.green();
+        hue = robot.colorSensor.argb();
+        light = robot.colorSensor.alpha();
+        connectionInfo = robot.colorSensor.getConnectionInfo();
 
-        int redValue = robot.groundColorSensor.red();
-        int blueValue = robot.groundColorSensor.blue();
-        int greenValue = robot.groundColorSensor.green();
-        int hue = robot.groundColorSensor.argb();
-        int light = robot.groundColorSensor.alpha();
+        lightDetected = robot.distanceSensor.getLightDetected();
+
+        pressed = robot.touchSensor.isPressed();
 
         telemetry.addData("Red:", redValue);
         telemetry.addData("Blue:", blueValue);
         telemetry.addData("Green:", greenValue);
         telemetry.addData("Hue:", hue);
         telemetry.addData("Light:", light);
+        telemetry.addData("Connection Info:", connectionInfo);
+
+        telemetry.addData("", "");
+
+        telemetry.addData("Optical Light:", lightDetected);
+
+        telemetry.addData("", "");
+
+        telemetry.addData("Touch Sensor:", pressed);
+
+        telemetry.addData("", "");
+
+        telemetry.addData("Counter:", runtime.seconds());
     }
 
     /*
