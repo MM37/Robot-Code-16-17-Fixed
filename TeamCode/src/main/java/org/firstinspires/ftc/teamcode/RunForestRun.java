@@ -100,7 +100,7 @@ public class RunForestRun extends LinearOpMode {
 
         waitForStart();
 
-        move(0.1, 90, 2);
+        move(0.2, 45, 600);
 
         //move(0.5, 45, 1);
         //move(0.5, 0, 1.5);

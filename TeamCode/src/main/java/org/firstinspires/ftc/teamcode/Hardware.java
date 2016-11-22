@@ -19,6 +19,11 @@ public class Hardware
     public DcMotor  BL  = null;
     public DcMotor  BR  = null;
 
+    public DcMotor pulley = null;
+    public Servo ballPusher = null;
+    public DcMotor popper = null;
+    public Servo lift = null;
+
     ColorSensor colorSensor = null;
     OpticalDistanceSensor distanceSensor = null;
     TouchSensor touchSensor = null;
@@ -38,10 +43,15 @@ public class Hardware
         hwMap = ahwMap;
 
         // Define and Initialize Motors
-        FL   = hwMap.dcMotor.get("FL");
-        FR   = hwMap.dcMotor.get("FR");
-        BL   = hwMap.dcMotor.get("BL");
-        BR   = hwMap.dcMotor.get("BR");
+        FL = hwMap.dcMotor.get("FL");
+        FR = hwMap.dcMotor.get("FR");
+        BL = hwMap.dcMotor.get("BL");
+        BR = hwMap.dcMotor.get("BR");
+
+        pulley = hwMap.dcMotor.get("pulley");
+        popper = hwMap.dcMotor.get("popper");
+        ballPusher = hwMap.servo.get("ballpusher");
+        lift = hwMap.servo.get("lift");
 
         /*
         FL.setDirection(DcMotor.Direction.REVERSE);
