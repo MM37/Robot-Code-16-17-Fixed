@@ -44,111 +44,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class AutonomousBeacon extends LinearOpMode {
 
     Hardware robot = new Hardware();
-    private ElapsedTime runtime = new ElapsedTime();
-
-    public double findMax(double... vals) {
-        double max = 0;
-
-        for (double d : vals) {
-            max = d > max ? d : max;
-        }
-
-        return max;
-    }
-
-    public void move(double power, double angle) {
-        double y = Math.sin(Math.toRadians(angle));
-        double x = Math.cos(Math.toRadians(angle));
-
-        double setFL = y + x;
-        double setFR = -y + x;
-        double setBL = y - x;
-        double setBR = -y - x;
-
-        double max = findMax(Math.abs(setFL), Math.abs(setFR), Math.abs(setBL), Math.abs(setBR));
-
-        double scale = power/max;
-
-        setFL *= scale;
-        setFR *= scale;
-        setBL *= scale;
-        setBR *= scale;
-
-        runtime.reset();
-
-        //telemetry.addData("Power", " BR: " + setBR + " BL: " + setBL + " FL: " + setFL + " FR: " + setFR);
-        //telemetry.update();
-
-        robot.BR.setPower(setBR);
-        robot.FL.setPower(setFL);
-        robot.FR.setPower(setFR);
-        robot.BL.setPower(setBL);
-    }
-
-    public void rotate (double power, int direction) {
-        //1 for clockwise, -1 for counter-clockwise THIS NEEDS TO BE CHECKED
-        robot.BR.setPower(power * direction);
-        robot.FL.setPower(power * direction);
-        robot.FR.setPower(power * direction);
-        robot.BL.setPower(power * direction);
-    }
-
-    public void stopColor(int color) {
-        //1: red, 2: middle, 3: blue, 4: either, 5: both
-
-        switch (color) {
-            case 1:
-                while(robot.colorSensor.red() < 2);
-                break;
-            case 2:
-                while(robot.colorSensor.blue() == 0);
-                break;
-            case 3:
-                while(robot.colorSensor.blue() < 2);
-                break;
-            case 4:
-                while(robot.colorSensor.blue() == 0 && robot.colorSensor.red() == 0);
-                break;
-            case 5:
-                while(robot.colorSensor.blue() == 0 || robot.colorSensor.red() == 0);
-                break;
-        }
-
-        finalStop();
-    }
-
-    public void stopTime(double time) {
-        runtime.reset();
-        while(runtime.seconds() < time);
-        finalStop();
-    }
-
-    public void stopTouch() {
-        while(!robot.touchSensor.isPressed());
-        finalStop();
-    }
-
-    public void finalStop() {
-        robot.BR.setPower(0);
-        robot.FL.setPower(0);
-        robot.FR.setPower(0);
-        robot.BL.setPower(0);
-
-        runtime.reset();
-        while(runtime.seconds() < 1);
-    }
-
-    public void pressBeacon() {
-        stopColor(4);
-        if(robot.colorSensor.blue() <  1) {
-            move(0.2, 180);
-            stopColor(3);
-        }
-        move(0.15, 270);
-        stopTouch();
-        move(0.15, 180);
-        stopTime(0.4);
-    }
 
     @Override
     public void runOpMode() {
@@ -160,10 +55,10 @@ public class AutonomousBeacon extends LinearOpMode {
 
         waitForStart();
 
-        move(0.4, 225);
-        pressBeacon();
-        move(0.2, 180);
-        pressBeacon();
+        robot.move(0.4, 225);
+        robot.pressBeacon();
+        robot.move(0.2, 180);
+        robot.pressBeacon();
         /*
         move(02, 135);
         stopTime(1);
