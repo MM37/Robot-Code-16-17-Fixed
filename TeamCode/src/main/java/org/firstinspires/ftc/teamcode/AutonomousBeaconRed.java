@@ -73,9 +73,6 @@ public class AutonomousBeaconRed extends LinearOpMode {
 
         runtime.reset();
 
-        //telemetry.addData("Power", " BR: " + setBR + " BL: " + setBL + " FL: " + setFL + " FR: " + setFR);
-        //telemetry.update();
-
         robot.BR.setPower(setBR);
         robot.FL.setPower(setFL);
         robot.FR.setPower(setFR);
