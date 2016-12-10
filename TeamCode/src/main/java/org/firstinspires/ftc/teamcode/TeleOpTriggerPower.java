@@ -123,14 +123,6 @@ public class TeleOpTriggerPower extends OpMode
         ballPusher = gamepad2.left_bumper;
         telemetry.addData("oii Trigger", pulley);
 
-        /*
-        telemetry.addData("raw x input from joystick", xJoy);
-        telemetry.addData("raw y input from joystick", yJoy);
-        telemetry.addData("raw r input from joystick", rJoy);
-
-        telemetry.addData("", "");
-        */
-
         x = xJoy/(Math.sqrt(Math.pow(xJoy, 2) + Math.pow(yJoy, 2)));
         y = yJoy/(Math.sqrt(Math.pow(xJoy, 2) + Math.pow(yJoy, 2)));
 
@@ -197,10 +189,10 @@ public class TeleOpTriggerPower extends OpMode
 
         if (pulley) {
             telemetry.addData("Trigger", "Pressed");
-            robot.pulley.setPower(1);
+            //robot.pulley.setPower(1);
         } else {
             telemetry.addData("Trigger", "Not Pressed");
-            robot.pulley.setPower(0);
+            //-robot.pulley.setPower(0);
         }
 
         if (ballPusher) {

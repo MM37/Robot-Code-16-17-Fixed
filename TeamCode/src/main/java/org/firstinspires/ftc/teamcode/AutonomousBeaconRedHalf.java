@@ -4,9 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Autonomous Straight", group="Main Robot")
-//@Disabled
-public class AutonomousStraight extends LinearOpMode {
+@Autonomous(name="Autonomous Beacon Red Half", group="Main Robot")
+public class AutonomousBeaconRedHalf extends LinearOpMode {
 
     Hardware robot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -21,10 +20,18 @@ public class AutonomousStraight extends LinearOpMode {
 
         waitForStart();
 
+        robot.move(0.5, 270);
         runtime.reset();
-        while(runtime.seconds() < 9);
+        while (runtime.seconds() < 1.75);
+        robot.move(0.35, 270);
+        robot.stopWhite();
 
-        robot.move(0.7, 90);
-        robot.stopTime(2.2);
+        robot.rotate(0.15, 1);
+        robot.stopTime(1.2);
+
+        robot.move(0.15, 90);
+        robot.stopWhite();
+
+        robot.beaconMethodRed();
     }
 }

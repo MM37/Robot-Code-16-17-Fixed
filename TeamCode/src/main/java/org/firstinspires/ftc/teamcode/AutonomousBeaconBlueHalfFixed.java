@@ -1,49 +1,46 @@
+/*
+Copyright (c) 2016 Robert Atkinson
+
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification,
+are permitted (subject to the limitations in the disclaimer below) provided that
+the following conditions are met:
+
+Redistributions of source code must retain the above copyright notice, this list
+of conditions and the following disclaimer.
+
+Redistributions in binary form must reproduce the above copyright notice, this
+list of conditions and the following disclaimer in the documentation and/or
+other materials provided with the distribution.
+
+Neither the name of Robert Atkinson nor the names of his contributors may be used to
+endorse or promote products derived from this software without specific prior
+written permission.
+
+NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
+LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+"AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESSFOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Autonomous Beacon Red", group="Main Robot")
-public class AutonomousBeaconRed extends LinearOpMode {
+@Autonomous(name="Autonomous Beacon Blue Half Fixed", group="Main Robot")
+public class AutonomousBeaconBlueHalfFixed extends LinearOpMode {
 
     Hardware robot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
-
-    public void stopTime(double time) {
-        runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < time);
-        finalStop();
-    }
-
-    public void stopTouch() {
-        while(opModeIsActive() && !robot.touchSensor.isPressed());
-        finalStop();
-    }
-
-    //stop either when it touches or time runs out
-    public void stopTouchOrTime(double time) {
-        runtime.reset();
-        while(opModeIsActive() && !robot.touchSensor.isPressed() &&  runtime.seconds() < time);
-        finalStop();
-        if(!robot.touchSensor.isPressed()) {
-            rotate(0.13, 1);
-        }
-        finalStop();
-    }
-
-    public void stopWhite() {
-        while(opModeIsActive() && robot.distanceSensor.getLightDetected() < robot.whiteOpticalValue);
-        finalStop();
-    }
-
-    //stops at white after ignoring for a certain time period
-    public void stopWhiteAfterTime(double time) {
-        runtime.reset();
-        while(opModeIsActive() && runtime.seconds() < time);
-        while(opModeIsActive() && runtime.seconds() < time && robot.distanceSensor.getLightDetected() < robot.whiteOpticalValue);
-        finalStop();
-    }
 
     public double findMax(double... vals) {
         double max = 0;
@@ -85,6 +82,40 @@ public class AutonomousBeaconRed extends LinearOpMode {
         robot.FL.setPower(power * direction);
         robot.FR.setPower(power * direction);
         robot.BL.setPower(power * direction);
+    }
+
+    public void stopTime(double time) {
+        runtime.reset();
+        while(opModeIsActive() && runtime.seconds() < time);
+        finalStop();
+    }
+
+    public void stopTouch() {
+        while(opModeIsActive() && !robot.touchSensor.isPressed());
+        finalStop();
+    }
+
+    //stop either when it touches or time runs out
+    public void stopTouchOrTime(double time) {
+        runtime.reset();
+        while(opModeIsActive() && !robot.touchSensor.isPressed() &&  runtime.seconds() < time);
+        finalStop();
+        if(!robot.touchSensor.isPressed()) {
+            rotate(0.13, 1);
+        }
+        finalStop();
+    }
+
+    public void stopWhite() {
+        while(opModeIsActive() && robot.distanceSensor.getLightDetected() < robot.whiteOpticalValue);
+        finalStop();
+    }
+
+    //stops at white after ignoring for a certain time period
+    public void stopWhiteAfterTime(double time) {
+        runtime.reset();
+        while(opModeIsActive() && runtime.seconds() < time && robot.distanceSensor.getLightDetected() < robot.whiteOpticalValue);
+        finalStop();
     }
 
     public void finalStop() {
@@ -163,30 +194,21 @@ public class AutonomousBeaconRed extends LinearOpMode {
 
         waitForStart();
 
-        robot.move(0.5, 270);
+        move(0.5, 90);
         runtime.reset();
-        while (opModeIsActive() && runtime.seconds() < 1.75);
-        robot.move(0.35, 270);
-        robot.stopWhite();
+        while (runtime.seconds() < 1.75);
+        move(0.35, 90);
+        stopWhite();
 
-        robot.rotate(0.15, 1);
-        robot.stopTime(1.2);
+        rotate(0.15, -1);
+        stopTime(1.2);
 
-        robot.move(0.15, 90);
-        robot.stopWhite();
+        move(0.15, 270);
+        stopWhite();
 
-        robot.beaconMethodRed();
+        beaconMethodBlue();
 
-        robot.move(0.3, 270);
-        robot.stopTime(0.9);
 
-        //90 degree corner rotate
-        robot.rotate(0.2, 1);
-        robot.stopTime(1.7);
 
-        robot.move(0.3, 270);
-        robot.stopWhite();
-
-        robot.beaconMethodRed();
     }
 }

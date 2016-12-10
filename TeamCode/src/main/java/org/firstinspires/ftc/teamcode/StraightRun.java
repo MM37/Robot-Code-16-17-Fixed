@@ -4,9 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Autonomous Straight", group="Main Robot")
-//@Disabled
-public class AutonomousStraight extends LinearOpMode {
+@Autonomous(name="Straight Run", group="Main Robot")
+public class StraightRun extends LinearOpMode {
 
     Hardware robot = new Hardware();
     private ElapsedTime runtime = new ElapsedTime();
@@ -21,10 +20,21 @@ public class AutonomousStraight extends LinearOpMode {
 
         waitForStart();
 
-        runtime.reset();
-        while(runtime.seconds() < 9);
+        //robot.move(0.4, 225);
+        //robot.stopTime(10);
 
-        robot.move(0.7, 90);
-        robot.stopTime(2.2);
+        robot.FL.setPower(0.75);
+        robot.FR.setPower(-0.75);
+        robot.BL.setPower(0.75);
+        robot.BR.setPower(-0.75);
+
+        runtime.reset();
+        while(opModeIsActive() && (runtime.seconds() < 8)) {
+
+        }
+        robot.FL.setPower(0);
+        robot.FR.setPower(0);
+        robot.BL.setPower(0);
+        robot.BR.setPower(0);
     }
 }

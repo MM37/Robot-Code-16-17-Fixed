@@ -59,115 +59,135 @@ public class TeleOpTankDrive extends OpMode
 
     //hardware variables
     Hardware robot           = new Hardware();
-    double left = 0;
-    double right = 0;
+    boolean tankDrive = true;
+    boolean slow;
+    boolean wasPressed = false;
 
-    boolean pulley;
-    boolean ballPusher;
+
+    double leftX = 0;
+    double leftY = 0;
+    double rightX = 0;
+    double rightY = 0;
+
+    double setFL = 0;
+    double setFR = 0;
+    double setBL = 0;
+    double setBR = 0;
+
+    double power = 0;
+    double xVector = 0;
+    double yVector = 0;
+    double max = 0;
+    double scale = 0;
+
     boolean popper;
     boolean lift;
+    double pulley = 0;
 
-    boolean slow;
 
     final double servoPushed = 0;
     final double servoUnpushed = 0.4;
 
-    final double liftUp = 0.45;
-    final double liftDown = 0;
 
-    final double popperPower = 0.65;
-
-
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
         robot.init(hardwareMap);
     }
 
-    public double findMax(double... vals) {
-        double max = 0;
 
-        for (double d : vals) {
-            max = d > max ? d : max;
-        }
 
-        return max;
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {}
-
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
-    @Override
-    public void start() {}
-
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
     @Override
     public void loop() {
-        left = -gamepad1.left_stick_y;
-        right = -gamepad1.right_stick_y;
+        //map values to gamepad
+        leftX = gamepad1.left_stick_x;
+        leftY = -gamepad1.left_stick_y;
+        rightX = gamepad1.right_stick_x;
+        rightY = -gamepad1.right_stick_y;
+
+        if(gamepad1.right_bumper && !wasPressed) {
+            wasPressed = true;
+            if(tankDrive) {
+                tankDrive = false;
+            } else {
+                tankDrive = true;
+            }
+        } else {
+            wasPressed = false;
+        }
+
         slow = gamepad1.left_bumper;
+        power = gamepad1.right_trigger;
 
-        pulley = gamepad2.left_bumper;
-        ballPusher = gamepad2.a;
-        popper = gamepad2.b;
+        popper = gamepad2.a;
         lift = gamepad2.right_bumper;
+        pulley = gamepad2.left_stick_y;
 
-        if (slow) {
-            left *= 0.2;
-            right *= 0.2;
+        //assigns values to the motor sets based off of tank drive mode
+        if(tankDrive) {
+            setFL = leftY;
+            setBL = leftY;
+            setFR = -rightY;
+            setBR = -rightY;
+
+            if (slow) {
+                setFL *= 0.2;
+                setBL *= 0.2;
+                setFR *= 0.2;
+                setBR *= 0.2;
+            }
         } else {
-            left *= 0.8;
-            right *= 0.8;
+            xVector = leftX/(Math.sqrt(Math.pow(leftX, 2) + Math.pow(leftX, 2)));
+            yVector = leftY/(Math.sqrt(Math.pow(leftY, 2) + Math.pow(leftY, 2)));
+
+            if (Double.isNaN(yVector)) {
+                yVector = 0;
+            }
+
+            if (Double.isNaN(xVector)) {
+                xVector = 0;
+            }
+
+            setFL = yVector + xVector + rightX;
+            setFR = -yVector + xVector + rightX;
+            setBL = yVector - xVector + rightX;
+            setBR = -yVector - xVector + rightX;
+
+            max = robot.findMax(Math.abs(setFL), Math.abs(setFR), Math.abs(setBL), Math.abs(setBR));
+            scale = power/max;
+
+            if (!Double.isNaN(scale) && !Double.isInfinite(scale)) {
+                setFL *= scale;
+                setFR *= scale;
+                setBL *= scale;
+                setBR *= scale;
+            }
         }
 
-        left = Math.abs(left) > 0.1 ? left : 0;
-        right = Math.abs(right) > 0.1 ? right : 0;
+        ///ensures that any power passed to motors isn't so low the motor burns out
+        setFL = Math.abs(setFL) > 0.1 ? setFL : 0;
+        setFR = Math.abs(setFR) > 0.1 ? setFR : 0;
+        setBL = Math.abs(setBL) > 0.1 ? setBL : 0;
+        setBR = Math.abs(setBR) > 0.1 ? setBR : 0;
 
-        robot.FL.setPower(left);
-        robot.BL.setPower(left);
-        robot.FR.setPower(-right);
-        robot.BR.setPower(-right);
+        robot.FL.setPower(setFL);
+        robot.FR.setPower(setFR);
+        robot.BL.setPower(setBL);
+        robot.BR.setPower(setBR);
 
-        if (pulley) {
-            robot.pulley.setPower(1);
+        robot.pulley.setPower(pulley);
+        if(lift) {
+            robot.lift.setPower(0.8);
         } else {
-            robot.pulley.setPower(0);
+            robot.lift.setPower(0);
         }
-
-        if (ballPusher) {
-            robot.ballPusher.setPosition(servoPushed);
-        } else {
-            robot.ballPusher.setPosition(servoUnpushed);
-        }
-
         if(popper) {
-            robot.popper.setPower(popperPower);
+            robot.popper.setPower(-1);
         } else {
             robot.popper.setPower(0);
         }
 
-        if(lift) {
-            robot.lift.setPosition(liftUp);
-        } else {
-            robot.lift.setPosition(liftDown);
-        }
+        telemetry.addData("was pressed Status", wasPressed);
+        telemetry.addData("move status", tankDrive);
     }
-
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
-    @Override
-    public void stop() {}
-
 }

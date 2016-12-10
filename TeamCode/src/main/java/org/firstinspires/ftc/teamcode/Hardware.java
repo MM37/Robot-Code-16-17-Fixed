@@ -1,18 +1,39 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.text.method.Touch;
-
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class Hardware
 {
+    HardwareMap hwMap  = null;
+    private ElapsedTime runtime = new ElapsedTime();
+
+    //Drive Train
+    public DcMotor  FL   = null;
+    public DcMotor  FR  = null;
+    public DcMotor  BL  = null;
+    public DcMotor  BR  = null;
+
+    //Other Motors
+    public DcMotor lift = null;
+    public DcMotor popper = null;
+    public DcMotor pulley = null;
+
+    //Other Servos
+    public Servo ballPusher = null;
+
+    //Sensors
+    ColorSensor colorSensor = null;
+    OpticalDistanceSensor distanceSensor = null;
+    TouchSensor touchSensor = null;
+
+    final double whiteOpticalValue = 0.0025;
 
     public double findMax(double... vals) {
         double max = 0;
@@ -93,6 +114,30 @@ public class Hardware
         finalStop();
     }
 
+    //stop either when it touches or time runs out
+    public void stopTouchOrTime(double time) {
+        runtime.reset();
+        while(!touchSensor.isPressed() &&  runtime.seconds() < time);
+        finalStop();
+        if(!touchSensor.isPressed()) {
+            rotate(0.13, 1);
+        }
+        finalStop();
+    }
+
+    public void stopWhite() {
+        while(distanceSensor.getLightDetected() < whiteOpticalValue);
+        finalStop();
+    }
+
+    //stops at white after ignoring for a certain time period
+    public void stopWhiteAfterTime(double time) {
+        runtime.reset();
+        while(runtime.seconds() < time);
+        while(distanceSensor.getLightDetected() < whiteOpticalValue);
+        finalStop();
+    }
+
     public void finalStop() {
         BR.setPower(0);
         FL.setPower(0);
@@ -100,44 +145,64 @@ public class Hardware
         BL.setPower(0);
 
         runtime.reset();
-        while(runtime.seconds() < 1);
+        while(runtime.seconds() < 0.3);
     }
 
-    public void pressBeacon() {
-        stopColor(1);
-        //telemetry.addData("b", runtime.seconds());
-        //telemetry.update();
-        /*if(robot.colorSensor.red() <  1) {
-            move(0.2, 180);
-            stopColor(1);
-        }*/
-        move(0.15, 270);
-        stopTouch();
-        move(0.15, 180);
-        stopTime(0.4);
+    //presses the beacon and backs up
+    public void beaconPressRed() {
+        if(colorSensor.blue() > colorSensor.red()) {
+            //left
+            move(0.2, 90);
+            stopTime(0.18);
+        } else {
+            //right
+            move(0.2, 270);
+            stopTime(0.23);
+        }
+        move(0.2, 360);
+        stopTouchOrTime(1.5);
+
+        move(0.2, 180);
+        stopTime(0.6);
     }
 
-    private ElapsedTime runtime = new ElapsedTime();
+    //presses the beacon and backs up
+    public void beaconPressBlue() {
+        if(colorSensor.red() > colorSensor.blue()) {
+            //left
+            move(0.2, 90);
+            stopTime(0.18);
+        } else {
+            //right
+            move(0.2, 270);
+            stopTime(0.23);
+        }
+        move(0.2, 360);
+        stopTouchOrTime(1.5);
 
-    /* Public OpMode members. */
-    public DcMotor  FL   = null;
-    public DcMotor  FR  = null;
-    public DcMotor  BL  = null;
-    public DcMotor  BR  = null;
+        move(0.2, 180);
+        stopTime(0.6);
+    }
 
-    public DcMotor pulley = null;
-    public Servo ballPusher = null;
-    public DcMotor popper = null;
-    public Servo lift = null;
+    //hits the first beacon, moves, and hits the second
+    public void beaconMethodRed() {
+        beaconPressRed();
 
-    ColorSensor colorSensor = null;
-    OpticalDistanceSensor distanceSensor = null;
-    TouchSensor touchSensor = null;
+        move(0.25, 270);
+        stopWhiteAfterTime(1);
 
-    double whiteThreshold;
+        beaconPressRed();
+    }
 
-    /* Local OpMode members. */
-    HardwareMap hwMap  = null;
+    //hits the first beacon, moves, and hits the second
+    public void beaconMethodBlue() {
+        beaconPressBlue();
+
+        move(0.25, 90);
+        stopWhiteAfterTime(1);
+
+        beaconPressBlue();
+    }
 
     /* Constructor */
     public Hardware() {
@@ -154,22 +219,15 @@ public class Hardware
         BL = hwMap.dcMotor.get("BL");
         BR = hwMap.dcMotor.get("BR");
 
-        pulley = hwMap.dcMotor.get("pulley");
-        popper = hwMap.dcMotor.get("popper");
         ballPusher = hwMap.servo.get("ballpusher");
-        lift = hwMap.servo.get("lift");
+        lift = hwMap.dcMotor.get("lift");
+        popper = hwMap.dcMotor.get("popper");
+        pulley = hwMap.dcMotor.get("pulley");
 
-        /*
-        FL.setDirection(DcMotor.Direction.REVERSE);
-        FR.setDirection(DcMotor.Direction.REVERSE);
-        BL.setDirection(DcMotor.Direction.REVERSE);
-        BR.setDirection(DcMotor.Direction.REVERSE);
-        */
-
-        FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Define and Initialize Color Sensor
         colorSensor = hwMap.colorSensor.get("colorsensor");
