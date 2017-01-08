@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 public class Hardware
 {
+    Class base;
     HardwareMap hwMap  = null;
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -32,6 +33,39 @@ public class Hardware
     ColorSensor colorSensor = null;
     OpticalDistanceSensor distanceSensor = null;
     TouchSensor touchSensor = null;
+
+    /* Initialize standard Hardware interfaces */
+    public void init(HardwareMap ahwMap) {
+    //public void init(HardwareMap ahwMap, String aBase) {
+        // save reference to HW Map
+        try {
+            //base = Class.forName(aBase);
+        } catch (Exception e) {
+
+        }
+        hwMap = ahwMap;
+
+        // Define and Initialize Motors
+        FL = hwMap.dcMotor.get("FL");
+        FR = hwMap.dcMotor.get("FR");
+        BL = hwMap.dcMotor.get("BL");
+        BR = hwMap.dcMotor.get("BR");
+
+        ballPusher = hwMap.servo.get("ballpusher");
+        lift = hwMap.dcMotor.get("lift");
+        popper = hwMap.dcMotor.get("popper");
+        pulley = hwMap.dcMotor.get("pulley");
+
+        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Define and Initialize Color Sensor
+        colorSensor = hwMap.colorSensor.get("colorsensor");
+        distanceSensor = hwMap.opticalDistanceSensor.get("distancesensor");
+        touchSensor = hwMap.touchSensor.get("touchsensor");
+    }
 
     final double whiteOpticalValue = 0.0025;
 
@@ -105,7 +139,11 @@ public class Hardware
 
     public void stopTime(double time) {
         runtime.reset();
-        while(runtime.seconds() < time);
+        try {
+            //while(base.opModeIsActive() && runtime.seconds() < time);
+        } catch (Exception e) {
+
+        }
         finalStop();
     }
 
@@ -206,32 +244,5 @@ public class Hardware
 
     /* Constructor */
     public Hardware() {
-    }
-
-    /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
-        // save reference to HW Map
-        hwMap = ahwMap;
-
-        // Define and Initialize Motors
-        FL = hwMap.dcMotor.get("FL");
-        FR = hwMap.dcMotor.get("FR");
-        BL = hwMap.dcMotor.get("BL");
-        BR = hwMap.dcMotor.get("BR");
-
-        ballPusher = hwMap.servo.get("ballpusher");
-        lift = hwMap.dcMotor.get("lift");
-        popper = hwMap.dcMotor.get("popper");
-        pulley = hwMap.dcMotor.get("pulley");
-
-        FL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        FR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        BL.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        BR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Define and Initialize Color Sensor
-        colorSensor = hwMap.colorSensor.get("colorsensor");
-        distanceSensor = hwMap.opticalDistanceSensor.get("distancesensor");
-        touchSensor = hwMap.touchSensor.get("touchsensor");
     }
 }

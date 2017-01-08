@@ -188,6 +188,7 @@ public class AutonomousBeaconBlue extends LinearOpMode {
     public void runOpMode() {
 
         robot.init(hardwareMap);
+        //robot.init(hardwareMap, "Autonomous Beacon Blue");
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
