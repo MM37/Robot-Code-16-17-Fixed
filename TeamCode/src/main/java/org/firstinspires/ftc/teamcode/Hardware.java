@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.modernrobotics.ModernRoboticsI2cGyro;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.GyroSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -17,9 +19,11 @@ public class Hardware
 
     //Drive Train
     public DcMotor  FL   = null;
-    public DcMotor  FR  = null;
     public DcMotor  BL  = null;
+    public DcMotor  FR  = null;
     public DcMotor  BR  = null;
+
+    ModernRoboticsI2cGyro gyro = null;
 
     public final int wheelDiameter = 4;
     public final int pulsesPerRevolution = 1120;
@@ -29,13 +33,15 @@ public class Hardware
 
         // Define and Initialize Motors
         FL = hwMap.dcMotor.get("FL");
-        FR = hwMap.dcMotor.get("FR");
         BL = hwMap.dcMotor.get("BL");
+        FR = hwMap.dcMotor.get("FR");
         BR = hwMap.dcMotor.get("BR");
 
-        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        gyro = (ModernRoboticsI2cGyro) hwMap.gyroSensor.get("gyro");;
+
         FL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BL.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BR.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
@@ -44,13 +50,41 @@ public class Hardware
         int ticks = (int) revolutions * pulsesPerRevolution;
 
         FL.setPower(speed);
-        FR.setPower(speed);
         BL.setPower(speed);
+        FR.setPower(speed);
         BR.setPower(speed);
 
         FL.setTargetPosition(ticks + FL.getCurrentPosition());
-        FR.setTargetPosition(ticks + FR.getCurrentPosition());
         BL.setTargetPosition(ticks + BL.getCurrentPosition());
+        FR.setTargetPosition(ticks + FR.getCurrentPosition());
         BR.setTargetPosition(ticks + BR.getCurrentPosition());
+    }
+
+    public void rotate (double speed, int degrees) {
+        int newOrientation = gyro.getHeading() + degrees;
+        if (newOrientation > 359) {
+            newOrientation -= 360;
+        } else if (newOrientation < 0) {
+            newOrientation += 360;
+        }
+
+        if(degrees > 0) {
+            FL.setPower(speed);
+            BL.setPower(speed);
+            FR.setPower(-speed);
+            BR.setPower(-speed);
+        } else if (degrees < 0) {
+            FL.setPower(-speed);
+            BL.setPower(-speed);
+            FR.setPower(speed);
+            BR.setPower(speed);
+        }
+
+        while (gyro.getHeading() != newOrientation); //need to add new op modes
+
+        FL.setPower(0);
+        BL.setPower(0);
+        FR.setPower(0);
+        BR.setPower(0);
     }
 }
