@@ -5,29 +5,29 @@
     density="hdpi"
     format="8"
     plugin-version="2.2.3"
-    timestamp="8490618891757"
+    timestamp="193280805416296"
     token="7845126581885631711"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
         name="javac"
-        duration="3192" />
+        duration="411" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="2878" />
+        duration="93" />
     <task
         name="verifier"
-        duration="266" />
+        duration="5" />
 
     <artifact
         location="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\outputs\apk\TeamCode-debug.apk"
         type="MAIN" />
 
     <build
-        timestamp="8490618891757"
+        timestamp="690231435613680"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\outputs\apk\TeamCode-debug.apk"
