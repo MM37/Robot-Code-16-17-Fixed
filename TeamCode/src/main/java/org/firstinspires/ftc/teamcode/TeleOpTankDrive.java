@@ -159,8 +159,10 @@ public class TeleOpTankDrive extends OpMode {
         }
 
         //ADD TELEMETRY
-        telemetry.addData("Left ODS", robot.odsLeft);
-        telemetry.addData("Right ODS", robot.odsRight);
+        telemetry.addData("Left ODS", robot.odsLeft.getRawLightDetected());
+        telemetry.addData("Right ODS", robot.odsRight.getRawLightDetected());
+        telemetry.addData("Blue", robot.colorSensor.blue());
+        telemetry.addData("Red", robot.colorSensor.red());
     }
 
     class ShootCycle implements Runnable {
