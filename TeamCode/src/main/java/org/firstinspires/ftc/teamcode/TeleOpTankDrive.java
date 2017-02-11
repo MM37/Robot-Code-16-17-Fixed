@@ -22,6 +22,8 @@ public class TeleOpTankDrive extends OpMode {
     boolean flipped = false;
     boolean recentlyPressed = false;
     boolean isInSlideAuto = false;
+    boolean isInPopperAuto = false;
+    boolean isInLineAuto = false;
 
     @Override
     public void init() {
@@ -68,12 +70,15 @@ public class TeleOpTankDrive extends OpMode {
         }
         //popper movement
         if (gamepad2.right_bumper) {
-            //robot.popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            isInPopperAuto = false;
+            robot.popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.popper.setPower(robot.popperSpeed);
         } else if (gamepad2.left_bumper) {
-            //robot.popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            isInPopperAuto = false;
+            robot.popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.popper.setPower(-robot.popperSpeed);
-        } else {
+        } else if (!isInPopperAuto) {
+            robot.popper.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.popper.setPower(0);
         }
 
@@ -137,13 +142,13 @@ public class TeleOpTankDrive extends OpMode {
         }
 
         //popper, slides, and collection movements
-        /*if (slides > 0.1 && isInSlideAuto) {
+        if (Math.abs(slides) > 0.1) {
+            isInSlideAuto = false;
             robot.slides.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             robot.slides.setPower(slides);
         } else if (!isInSlideAuto) {
             robot.slides.setPower(slides);
-        }*/
-        robot.slides.setPower(slides);
+        }
 
         if (collectionIn) {
             robot.collection.setPower(-robot.collectionSpeed);
@@ -168,13 +173,16 @@ public class TeleOpTankDrive extends OpMode {
 
         public void run() {
             try {
+                isInPopperAuto = true;
                 robot.ballRelease.setPosition(robot.ballReleaseDownPosition);
                 sleep(1000);
 
                 robot.ballRelease.setPosition(robot.ballReleaseUpPosition);
                 sleep(100);
 
+                robot.popper.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 robot.popper.setPower(robot.popperSpeed);
+                robot.popper.setTargetPosition(robot.popper.getCurrentPosition() + robot.pulsesPerRevolution);
             } catch (InterruptedException e) {
                 telemetry.addData("Thread Error", e.toString());
             }
@@ -198,16 +206,9 @@ public class TeleOpTankDrive extends OpMode {
         }
 
         public void run() {
-            /*isInSlideAuto = true;
+            isInSlideAuto = true;
             robot.slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            robot.slides.setTargetPosition(robot.slides.getCurrentPosition() + robot.liftTicks);*/
-            try {
-                robot.slides.setPower(1);
-                sleep(2000);
-                robot.slides.setPower(0);
-            } catch (InterruptedException e) {
-                telemetry.addData("Thread Error", e.toString());
-            }
+            robot.slides.setTargetPosition(robot.slides.getCurrentPosition() + robot.liftTicks);
         }
 
         public void start () {
