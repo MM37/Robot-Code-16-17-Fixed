@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Sun Dec 11 13:07:27 EST 2016
+#Thu Feb 09 23:45:08 EST 2017
 175.set=ASSET
 122.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\raw\\texture_vertex_shader.glsl
 60.set=ASSET
@@ -58,7 +58,7 @@
 89.set=ANDROID_RESOURCE
 112.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\FIRST_logo.png
 122.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_
-21.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\xml\\preferences.xml
+21.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\activity_blocks.xml
 119.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\raw\\cube_mesh_vertex_shader.glsl
 129.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_
 28.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\toolbox\\color.xml
@@ -142,7 +142,7 @@
 89.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_
 111.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\activity_inspection.xml
 121.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug
-20.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\activity_blocks.xml
+20.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\xml\\preferences.xml
 118.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\blockly\\blockly_compressed.js
 128.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_
 27.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\images\\ftcI2cDeviceReader.png
@@ -257,7 +257,7 @@
 84.set=ANDROID_RESOURCE
 76.set=ASSET
 68.set=ANDROID_RESOURCE
-133.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\main_menu.xml
+133.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\i2c_device.xml
 10.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_
 42.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\blockly\\media\\disconnect.wav
 180.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\images\\ftcCRServo.png
@@ -333,7 +333,7 @@
 74.set=ANDROID_RESOURCE
 66.set=ANDROID_RESOURCE
 58.set=ASSET
-132.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\i2c_device.xml
+132.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\menu\\main_menu.xml
 41.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\raw\\errormessage.wav
 139.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\blocks\\elapsed_time.js
 4.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\RobotConfigTaxonomy.xsd
@@ -450,7 +450,7 @@ count=186
 55.set=ANDROID_RESOURCE
 154.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug\\blocks\\comment.js
 31.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug
-63.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\i2cs.xml
+63.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\analog_input_device.xml
 47.set=ANDROID_RESOURCE
 38.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug
 39.set=ASSET
@@ -528,7 +528,7 @@ count=186
 45.set=ANDROID_RESOURCE
 153.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\info_button.xml
 30.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug
-62.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\analog_input_device.xml
+62.file=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\res\\resources-debug.ap_\\res\\layout\\i2cs.xml
 37.set=ASSET
 29.set=ASSET
 37.base=C\:\\Users\\rkhaj\\Documents\\GitHub\\Robot-Code-16-17-Fixed\\TeamCode\\build\\intermediates\\assets\\debug

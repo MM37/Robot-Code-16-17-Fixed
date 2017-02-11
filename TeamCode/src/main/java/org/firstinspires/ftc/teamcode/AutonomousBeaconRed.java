@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@Autonomous(name="Autonomous Beacon Red", group="Main Robot")
+@Autonomous(name="Beacon Red", group="Competition")
+@Disabled
 public class AutonomousBeaconRed extends LinearOpMode {
 
     Hardware robot = new Hardware();

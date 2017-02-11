@@ -21,21 +21,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\exploded-aar\RobotCore-release\jars\classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="23.0.3"
-        sha1="dc4ad03580e3f29564476f06b65f06d89704c0a9">
-        <dex dex="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\pre-dexed\debug\intermediates-exploded-aar-RobotCore-release_5fd8ed17ca0ca81d38451989c759e728fbb3d4dc.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\exploded-aar\Hardware-release\jars\classes.jar"
         jumboMode="false"
         optimize="true"
         revision="23.0.3"
         sha1="d30a44d837c8f25360e4190341f43399eea81172">
         <dex dex="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\pre-dexed\debug\intermediates-exploded-aar-Hardware-release_fee33f0472b7e25b2862f26a15659bd8444828ad.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\exploded-aar\RobotCore-release\jars\classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="23.0.3"
+        sha1="dc4ad03580e3f29564476f06b65f06d89704c0a9">
+        <dex dex="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\pre-dexed\debug\intermediates-exploded-aar-RobotCore-release_5fd8ed17ca0ca81d38451989c759e728fbb3d4dc.jar" />
     </item>
     <item
         is-multidex="false"
@@ -115,7 +115,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="e03e48fa952cb6f6a142f74fa58fe0824032f582">
+        sha1="e10e2857e4ab589ee3bb07bcd200c9db0ca5bf50">
         <dex dex="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\pre-dexed\debug\instant-run_00ab4d351b9d2c0e2fe36219c56101bf927a91b8.jar" />
     </item>
     <item
@@ -142,7 +142,7 @@
         jumboMode="true"
         optimize="true"
         revision="23.0.3"
-        sha1="dddf42dfdf4007856b5433dc2b252cf0772282a7">
+        sha1="7dcfcf8f941fe230f2e6c8691b693295967cf337">
         <dex dex="C:\Users\rkhaj\Documents\GitHub\Robot-Code-16-17-Fixed\TeamCode\build\intermediates\pre-dexed\debug\instant-run-bootstrap_f0cf643cb4be58c2b60958c48b70e4c553e390ea.jar" />
     </item>
     <item
